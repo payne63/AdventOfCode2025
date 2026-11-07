@@ -2,6 +2,15 @@ use std::io::{Error, ErrorKind};
 
 use crate::base::{self, FilesDataEnum};
 
+/// Resolves the movement instructions in the given file to count how many times the position is 0.
+///
+/// The rules are:
+/// 1. Start at position 50.
+/// 2. Each line in the file specifies a move (e.g., "L10", "R5").
+/// 3. Movement is wrapped around 0-99.
+/// 4. For a move of N steps, the actual movement is `N % 100`.
+///
+/// Returns the count of times the position lands on 0.
 pub fn resolve_part1(file_name: FilesDataEnum) -> Result<u32, Error> {
     let lines = base::get_lines_from_file(&file_name.as_string())?;
     let mut moves: Vec<MoveOrder> = Vec::new();

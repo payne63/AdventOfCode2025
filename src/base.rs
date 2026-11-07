@@ -4,6 +4,15 @@ use std::{
     path::PathBuf,
 };
 
+/// Reads all lines from a specified file located in the 'data' subdirectory relative to the crate root.
+///
+/// # Arguments
+///
+/// * `file_name` - The name of the file to read (e.g., "Day1.txt").
+///
+/// # Returns
+///
+/// A `Result` containing a `Vec<String>` of lines if successful, or an `std::io::Error` if the file cannot be read.
 pub fn get_lines_from_file(file_name: &String) -> Result<Vec<String>, std::io::Error> {
     let path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
         .join("data")
