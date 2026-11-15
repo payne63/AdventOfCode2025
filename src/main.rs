@@ -29,8 +29,9 @@ fn resolve_day() -> Result<(), Error> {
         Ok(result) => println!("le resultat Day2 part1 est {result}"),
         Err(error) => println!("erreur -> {error}"),
     }
-    Ok(match day2.resolve_part2(&get_file_path("Day2", None)?) {
+    match day2.resolve_part2(&get_file_path("Day2", Some(true))?) {
         Ok(result) => println!("le resultat Day2 part2 est {result}"),
         Err(error) => println!("erreur -> {error}"),
-    })
+    }
+    Ok(())
 }
