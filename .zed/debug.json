@@ -1,0 +1,16 @@
+// Project-local debug tasks
+//
+// For more documentation on how to configure debug tasks,
+// see: https://zed.dev/docs/debugger
+
+[
+  {
+    "label": "Debug AdventOfCode2025",
+    "adapter": "CodeLLDB",
+    "request": "launch",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "build": { "command": "cargo", "args": ["build"] },
+    "program": "$ZED_WORKTREE_ROOT/target/debug/AdventOfCode2025.exe",
+    "sourceLanguages": ["rust"]
+  }
+]
