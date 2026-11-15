@@ -7,11 +7,18 @@ mod base;
 mod day1;
 mod day2;
 
-fn main() -> Result<(), Error> {
+fn main() {
+    match resolve_day(){
+        Ok(_) => println!("success"),
+        Err(error) => println!("erreur -> {}",error),
+    }
+}
+
+fn resolve_day() -> Result<(), Error> {
     let day = Day1{};
     match day.resolve_part1(&get_file_path("Day1", None)?) {
         Ok(result) => println!("le resultat Day1 part1 est {result}"),
-        Err(error) => println!("erreur -> {error}"),
+        Err(error) => println!("erreur -> {}",error),
     }
     match day.resolve_part2(&get_file_path("Day1",None)?) {
         Ok(result) => println!("le resultat Day1 part2 est {result}"),
@@ -22,9 +29,8 @@ fn main() -> Result<(), Error> {
         Ok(result) => println!("le resultat Day2 part1 est {result}"),
         Err(error) => println!("erreur -> {error}"),
     }
-    match day2.resolve_part2(&get_file_path("Day2", None)?) {
+    Ok(match day2.resolve_part2(&get_file_path("Day2", None)?) {
         Ok(result) => println!("le resultat Day2 part2 est {result}"),
         Err(error) => println!("erreur -> {error}"),
-    }
-    Ok(())
+    })
 }
