@@ -1,9 +1,11 @@
 use std::{
-    fs::File,
-    io::{BufRead, BufReader},
-    path::PathBuf,
+    fs::File, io::{BufRead, BufReader, Error, ErrorKind}, path::PathBuf,
 };
 
+pub trait ResolveDay {
+    fn resolve_part1(&self, file_name: &String) -> Result<String, Error>;
+    fn resolve_part2(&self, file_name: &String) -> Result<String, Error>;
+}
 
 
 /// Reads all lines from a specified file located in the 'data' subdirectory relative to the crate root.
@@ -29,6 +31,7 @@ pub fn get_lines_from_file(file_name: &String) -> Result<Vec<String>, std::io::E
     Ok(list)
 }
 
+
 pub enum FilesDataEnum {
     Day1Training,
     Day1,
@@ -45,4 +48,16 @@ impl FilesDataEnum {
             FilesDataEnum::Day2Training => "Day2Training.txt".to_string(),
         }
     }
+}
+pub fn get_file_path(day_name: &str, is_training: Option<bool>) -> Result<String, Error> {
+    let name_file = match is_training {
+        Some(true) => {day_name.to_string() + "Training"}
+        None|Some(false) => day_name.to_string(),
+    };
+    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .join("data")
+        .join(name_file)
+        .into_os_string()
+        .into_string()
+        .map_err(|_| Error::new(ErrorKind::InvalidFilename,"impossible de creer le chemin de fichier"))
 }

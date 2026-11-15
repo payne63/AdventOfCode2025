@@ -1,21 +1,15 @@
 use std::io::{Error, ErrorKind};
+use crate::base::{self, ResolveDay};
 
-use crate::base::{self, FilesDataEnum};
+pub struct Day1 {}
 
-/// Resolves the movement instructions in the given file to count how many times the position is 0.
-///
-/// The rules are:
-/// 1. Start at position 50.
-/// 2. Each line in the file specifies a move (e.g., "L10", "R5").
-/// 3. Movement is wrapped around 0-99.
-/// 4. For a move of N steps, the actual movement is `N % 100`.
-///
-/// Returns the count of times the position lands on 0.
-pub fn resolve_part1(file_name: FilesDataEnum) -> Result<u32, Error> {
-    let lines = base::get_lines_from_file(&file_name.as_string())?;
+impl ResolveDay for Day1 {
+    fn resolve_part1(&self, file_name: &String) -> Result<String, Error> {
+        let lines = base::get_lines_from_file(file_name)?;
+    // start resolve movement
+
     let moves = get_move_from_lines(lines)?;
 
-    // start resolve movement
     let mut count_zero = 0u32;
     let mut position = 50i32;
     for movement in moves.into_iter() {
@@ -31,10 +25,47 @@ pub fn resolve_part1(file_name: FilesDataEnum) -> Result<u32, Error> {
         if position == 0 {
             count_zero += 1;
         }
-        // println!("nouvelle position : {position}");
     }
 
-    Ok(count_zero)
+    Ok(count_zero.to_string())
+
+}
+
+    fn resolve_part2(&self, file_name: &String) -> Result<String, Error> {
+        let lines = base::get_lines_from_file(file_name)?;
+        let moves = get_move_from_lines(lines)?;
+    
+        let mut count_zero = 0i32;
+        let mut position = 50i32;
+        for movement in moves {
+            match (movement.direction, movement.steps) {
+                (Direction::Left, steps) => {
+                    for _ in 0..steps {
+                        position -= 1;
+                        if position < 0 {
+                            position = 100 + position;
+                        }
+                        if position == 0 {
+                            count_zero += 1;
+                        }
+                    }
+                }
+                (Direction::Right, steps) => {
+                    for _ in 0..steps {
+                        position += 1;
+                        if position > 99 {
+                            position = position % 100;
+                        }
+                        if position == 0 {
+                            count_zero += 1;
+                        }
+                    }
+                }
+            }
+        }
+    
+        Ok(count_zero.to_string())
+    }
 }
 
 fn get_move_from_lines(lines: Vec<String>) -> Result<Vec<MoveOrder>, Error> {
@@ -81,40 +112,4 @@ struct MoveOrder {
 enum Direction {
     Left,
     Right,
-}
-
-pub fn resolve_part2(file_name: FilesDataEnum) -> Result<u32, Error> {
-    let lines = base::get_lines_from_file(&file_name.as_string())?;
-    let moves = get_move_from_lines(lines)?;
-
-    let mut count_zero = 0i32;
-    let mut position = 50i32;
-    for movement in moves {
-        match (movement.direction, movement.steps) {
-            (Direction::Left, steps) => {
-                for _ in 0..steps {
-                    position -= 1;
-                    if position < 0 {
-                        position = 100 + position;
-                    }
-                    if position == 0 {
-                        count_zero += 1;
-                    }
-                }
-            }
-            (Direction::Right, steps) => {
-                for _ in 0..steps {
-                    position += 1;
-                    if position > 99 {
-                        position = position % 100;
-                    }
-                    if position == 0 {
-                        count_zero += 1;
-                    }
-                }
-            }
-        }
-    }
-
-    Ok(count_zero as u32)
 }
