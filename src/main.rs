@@ -1,11 +1,13 @@
 use crate::base::{ResolveDay, get_file_path};
 use crate::day1::Day1;
 use crate::day2::Day2;
+use crate::day3::Day3;
 use std::io::Error;
 
 mod base;
 mod day1;
 mod day2;
+mod day3;
 
 fn main() {
     match resolve_day(){
@@ -31,6 +33,11 @@ fn resolve_day() -> Result<(), Error> {
     }
     match day2.resolve_part2(&get_file_path("Day2", Some(true))?) {
         Ok(result) => println!("le resultat Day2 part2 est {result}"),
+        Err(error) => println!("erreur -> {error}"),
+    }
+    let day3 = Day3{};
+    match day3.resolve_part1(&get_file_path("Day3Training", None)?) {
+        Ok(result) => println!("le resultat Day3 part1 est {result}"),
         Err(error) => println!("erreur -> {error}"),
     }
     Ok(())

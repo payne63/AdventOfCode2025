@@ -1,10 +1,11 @@
 use std::io::{Error, ErrorKind};
-use crate::base::ResolveDay;
+use crate::base::{ ResolveDay, get_lines_from_file};
 pub struct Day2 {}
+
 
 impl ResolveDay for Day2 {
     fn resolve_part1(&self, file_name: &String) -> Result<String, Error> {
-        let lines = crate::base::get_lines_from_file(file_name)?;
+        let lines = get_lines_from_file(file_name)?;
         let binding = lines.concat();
         let complet_codes: Vec<&str> = binding.split(",").collect();
         let mut ranges: Vec<Vec<String>> = Vec::new();
@@ -32,7 +33,7 @@ impl ResolveDay for Day2 {
     }
 
     fn resolve_part2(&self, file_name: &String) -> Result<String, Error> {
-        let lines = crate::base::get_lines_from_file(file_name)?;
+        let lines = get_lines_from_file(file_name)?;
         let binding = lines.concat();
         let complet_codes: Vec<&str> = binding.split(",").collect();
         let mut ranges: Vec<Vec<String>> = Vec::new();

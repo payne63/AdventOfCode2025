@@ -1,11 +1,11 @@
 use std::io::{Error, ErrorKind};
-use crate::base::{self, ResolveDay};
+use crate::base::{self, ResolveDay, get_lines_from_file};
 
 pub struct Day1 {}
 
 impl ResolveDay for Day1 {
     fn resolve_part1(&self, file_name: &String) -> Result<String, Error> {
-        let lines = base::get_lines_from_file(file_name)?;
+        let lines = get_lines_from_file(file_name)?;
     // start resolve movement
 
     let moves = get_move_from_lines(lines)?;
@@ -32,7 +32,7 @@ impl ResolveDay for Day1 {
 }
 
     fn resolve_part2(&self, file_name: &String) -> Result<String, Error> {
-        let lines = base::get_lines_from_file(file_name)?;
+        let lines = get_lines_from_file(file_name)?;
         let moves = get_move_from_lines(lines)?;
     
         let mut count_zero = 0i32;
